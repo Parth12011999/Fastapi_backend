@@ -60,7 +60,7 @@ def get_todo_by_id(current_user: TokenData, db: Session, todo_id: UUID) -> Todo:
 
 
 def update_todo(
-    current_user: TokenData, db: Session, todo_id: UUID, todo_update: model.TodoCreate
+    current_user: TokenData, db: Session, todo_id: UUID, todo_update: model.TodoUpdate                      
 ) -> Todo:
     todo_data = todo_update.model_dump(exclude_unset=True)
     db.query(Todo).filter(Todo.id == todo_id).filter(
