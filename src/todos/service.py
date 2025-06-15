@@ -19,7 +19,7 @@ def create_todo(current_user: TokenData, db: Session, todo: model.TodoCreate) ->
         db.refresh(new_todo)
         logging.info(f"Created new todo for user: {current_user.get_uuid()}")
         return ResponseService.success(
-            data=new_todo, message="Todo created successfully"
+            data=new_todo.to_dict(), message="Todo created successfully"
         )
     except Exception as e:
         logging.error(
@@ -103,7 +103,7 @@ def complete_todo(current_user: TokenData, db: Session, todo_id: UUID) -> Todo:
 
 
 def delete_todo(current_user: TokenData, db: Session, todo_id: UUID) -> None:
-    todo = get_todo_by_id(current_user, db, todo_id)
+    todo = get_todo_by_id_raw(current_user, db, todo_id)
     db.delete(todo)
     db.commit()
     logging.info(f"Todo {todo_id} deleted by user {current_user.get_uuid()}")

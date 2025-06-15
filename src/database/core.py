@@ -3,17 +3,20 @@ from fastapi import Depends
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session, declarative_base
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
+print("Loading database configuration...")
+
 """ You can add a DATABASE_URL environment variable to your .env file """
-# DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 """ Or hard code SQLite here """
 # DATABASE_URL = "sqlite:///./todosapp.db"
 
 """ Or hard code PostgreSQL here """
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/Backend-App"
+# DATABASE_URL=load_dotenv().get("DATABASE_URL", "postgresql://user:password@localhost/todosapp")
 
 engine = create_engine(DATABASE_URL)
 
